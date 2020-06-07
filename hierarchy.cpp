@@ -18,36 +18,37 @@ public:
 	virtual ~Shape() {}	
 };
 
+#if 0
 void rotate_all(vector<Shape>& v, int angle){
 	for (auto p: v)
 		p->rotate(angle);
 }
-
-class Circle: Public Shape {
+#endif
+class Circle: public Shape {
 public:
 	Circle(Point p, int rad);	//constructor
 	Point center() const override {
-		return x;
+		return p;
 	}
 	void move(Point to) override {
-		x = to;
+		p = to;
 	}
 
 	void draw() const override;
 	void rotate(int) override{}
 private:
-	Point x;	//center
+	Point p;	//center
 	int r;		//radius 
-}
+};
 
 class Smiley: public Circle {
 public: 
-	Smiley(Point p, int rad) : Circle{p, rad}, mouth{nullptr}{}
+	Smiley(Point p, int rad) : Circle{p, rad}, mouth{nullptr}{};
 	~Smiley() {
 		delete mouth;
 		for (auto p: eyes)
 			delete p;
-	}
+	};
 
 	void move(Point to) override;
 
@@ -65,11 +66,11 @@ public:
 private:
 	vector<Shape*> eyes;
 	Shape *mouth;
-}
+};
 
 void Smiley::draw() const {
 	Circle::draw();
 	for (auto p: eyes)
 		p->draw();
 	mouth->draw();
-}
+};
